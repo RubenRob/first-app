@@ -1,32 +1,27 @@
+
 <div>
-  <label>Geef een getal tussen 1 en 100</label>
-</div>
-<div>
-  <input matInput min="1" max="100" type="number" [(ngModel)]="getal">
-</div>
-<div>
-<div *ngIf="buttonOpnieuw; then thenBlock else elseBlock"></div>
+<div *ngIf="buttonOpnieuw || timer <= 0; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>  
     <button mat-button style="background-color:cornflowerblue;"  (click)="Initialize()">Opnieuw spelen</button>
+    <div>
+      <label *ngIf="timer <= 0">de tijd is om, het getal was {{randomGetal}}</label>
+    </div>
   </ng-template>
   <ng-template #elseBlock> 
+    <div>
+    <label>Geef een getal tussen 1 en 100</label>
+  </div>
+    <div>
+      <input mat-input min="1" max="100" type="number" [(ngModel)]="getal" (keydown.enter)="Enter($event)">
+    </div>
     <button mat-button style="background-color:cornflowerblue;;" (click)="DoeEenGok()">Doe een gok</button>
   </ng-template>
   <div>
     <label>  {{randomGetal}} </label>
   </div>
   <div>
-    <label>  {{messageGetal}} </label>
+    <label *ngIf="timer >0">  {{messageGetal}} </label>
   </div>
 <div>
-  <label>  {{messageTeller}} </label>
-</div>
-<!--
-
-
-
-
--->
-<div>
-  <label>  {{timer}} </label>
+  <label *ngIf="timer > 0">  {{messageTeller}} </label>
 </div>

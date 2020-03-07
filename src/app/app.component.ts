@@ -29,52 +29,55 @@ export class AppComponent {
   buttonOpnieuw;
 
   secondsSubject: Subject<number> = new Subject<number>();
-  seconds = this.secondsSubject.asObservable();
 
   constructor() {
     this.Initialize();
 
     setInterval(() => {
       this.timer -= 1;
-      this.secondsSubject.next(this.teller);
+      this.secondsSubject.next(this.timer);
     }, 1000);
-  }
+  }  
 
   Initialize(){    
-    this.randomGetal = Math.floor(Math.random() * 100) + 1
-    this.teller = 3;
+    this.randomGetal = Math.floor(Math.random() * 100) + 1;
     this.timer = 60;
     this.lijst = "";
+    this.teller = 3;
+    this.messageGetal = "";
+    this.messageTeller = "";
     this.buttonOpnieuw = false;
   }
-
   
-  DoeEenGok() {
+  Enter(event)
+  {
+    if(event.key  === "Enter")
+      this.DoeEenGok();
+  }
 
-    this.teller = this.teller -1
-    this.messageTeller="U heeft nog" + this.teller + "kansen."
-    this.lijst = this.getal + " "  + this.lijst
+  DoeEenGok() {
+    this.teller -= 1;
+    this.messageTeller="U heeft nog" + this.teller + "kansen.";
+    this.lijst = this.getal + " "  + this.lijst;
    if(this.getal == this.randomGetal)
    {
-      this.messageGetal = "U hebt het getal geraden! Proficiat."
-      this.messageTeller=""
+      this.messageGetal = "Het getal was inderdaad " + this.randomGetal + " , proficiat!";
+      this.messageTeller="";
       this.buttonOpnieuw = true;
    }
    else
    {
      if(this.getal < this.randomGetal)
-        this.messageGetal = "Uw gekozen getal is te klein, u probeerde reeds " + this.lijst + "."
+        this.messageGetal = "Uw gekozen getal is te klein, u probeerde reeds " + this.lijst + ".";
       else
-        this.messageGetal = "Uw gekozen getal is te groot, u probeerde reeds " + this.lijst + "."
+        this.messageGetal = "Uw gekozen getal is te groot, u probeerde reeds " + this.lijst + ".";
     }
-    this.getal = null;
-    if (this.teller == 0)
+    if (this.teller == 0 && this.getal != this.randomGetal)
     {
-      this.messageGetal = "U heeft verloren, het getal was " + this.randomGetal + "."
-      this.messageTeller=""
+      this.messageGetal = "U heeft verloren, het getal was " + this.randomGetal + ".";
+      this.messageTeller = "";
       this.buttonOpnieuw = true;
     }
-
+    this.getal = null;
   }
-  
 }
