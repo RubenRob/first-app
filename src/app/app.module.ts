@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import{FlexLayoutModule}from'@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import {FormsModule} from "@angular/forms";
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,

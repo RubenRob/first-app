@@ -1,27 +1,29 @@
 
-<div>
-<div *ngIf="buttonOpnieuw || timer <= 0; then thenBlock else elseBlock"></div>
+<!--responsive toepassen, 1 kolommen maken-->
+<div fxFlex fxLayout="row" fxLayoutGap="10px" style="height:100vh">
   <ng-template #thenBlock>  
     <button mat-button style="background-color:cornflowerblue;"  (click)="Initialize()">Opnieuw spelen</button>
-    <div>
-      <label *ngIf="timer <= 0">de tijd is om, het getal was {{randomGetal}}</label>
-    </div>
+    <label *ngIf="timer <= 0">de tijd is om, het getal was {{randomGetal}}</label>
   </ng-template>
-  <ng-template #elseBlock> 
-    <div>
-    <label>Geef een getal tussen 1 en 100</label>
-  </div>
-    <div>
-      <input mat-input min="1" max="100" type="number" [(ngModel)]="getal" (keydown.enter)="Enter($event)">
+  <!--responsive toepassen, 2 kolommen maken-->
+  <div fxLayout="column wrap">
+    <div *ngIf="buttonOpnieuw || timer <= 0; then thenBlock else elseBlock"></div>
+      <div fxFlex="50" fxLayout="column">
+      <ng-template #elseBlock>   
+        <label>Geef een getal tussen 1 en 100</label>
+          <input mat-input min="1" max="100" type="number" [(ngModel)]="getal" (keydown.enter)="Enter($event)">
+          <button mat-button style="background-color:cornflowerblue;;" (click)="DoeEenGok()">Doe een gok</button>
+      </ng-template>
+      </div>
     </div>
-    <button mat-button style="background-color:cornflowerblue;;" (click)="DoeEenGok()">Doe een gok</button>
-  </ng-template>
-  <div>
-    <label>  {{randomGetal}} </label>
-  </div>
-  <div>
-    <label *ngIf="timer >0">  {{messageGetal}} </label>
-  </div>
-<div>
-  <label *ngIf="timer > 0">  {{messageTeller}} </label>
-</div>
+    <div fxFlex="50" fxLayout="column">
+      <div>
+      <label *ngIf="timer >0">  {{messageGetal}} </label>
+      </div>
+      <div>
+        <label *ngIf="timer > 0">  {{messageTeller}} </label>
+      </div>
+      <div>
+        <label *ngIf="timer > 0"> U heeft nog {{timer}} seconden </label>
+      </div>
+    </div>

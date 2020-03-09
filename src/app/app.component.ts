@@ -72,7 +72,7 @@ export class AppComponent {
       else
         this.messageGetal = "Uw gekozen getal is te groot, u probeerde reeds " + this.lijst + ".";
     }
-    if (this.teller == 0 && this.getal != this.randomGetal)
+    if (this.teller == 0 && this.getal != this.randomGetal)//of timer is nul
     {
       this.messageGetal = "U heeft verloren, het getal was " + this.randomGetal + ".";
       this.messageTeller = "";
