@@ -1,29 +1,29 @@
-
-<!--responsive toepassen, 1 kolommen maken-->
-<div fxFlex fxLayout="row" fxLayoutGap="10px" style="height:100vh">
-  <ng-template #thenBlock>  
-    <button mat-button style="background-color:cornflowerblue;"  (click)="Initialize()">Opnieuw spelen</button>
-    <label *ngIf="timer <= 0">de tijd is om, het getal was {{randomGetal}}</label>
-  </ng-template>
-  <!--responsive toepassen, 2 kolommen maken-->
-  <div fxLayout="column wrap">
-    <div *ngIf="buttonOpnieuw || timer <= 0; then thenBlock else elseBlock"></div>
-      <div fxFlex="50" fxLayout="column">
-      <ng-template #elseBlock>   
-        <label>Geef een getal tussen 1 en 100</label>
-          <input mat-input min="1" max="100" type="number" [(ngModel)]="getal" (keydown.enter)="Enter($event)">
+<div *ngIf="TimerIsNul()"></div>
+<div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100vh">
+  <div fxLayout="row wrap">
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+      <div *ngIf="buttonOpnieuw || timerApp <= 0; then thenLinks else elseLinks"></div>
+        <ng-template #thenLinks>  
+          <button mat-button style="background-color:cornflowerblue;"  (click)="Initialize()">Opnieuw spelen</button>
+        </ng-template>
+        <ng-template #elseLinks>   
+          <label>Geef een getal tussen 1 en 100</label>
+          <input mat-input min="1" max="100" type="number" [(ngModel)]="getal" (keydown.enter)="Enter($event)"/>
           <button mat-button style="background-color:cornflowerblue;;" (click)="DoeEenGok()">Doe een gok</button>
-      </ng-template>
-      </div>
-    </div>
-    <div fxFlex="50" fxLayout="column">
-      <div>
-      <label *ngIf="timer >0">  {{messageGetal}} </label>
-      </div>
-      <div>
-        <label *ngIf="timer > 0">  {{messageTeller}} </label>
-      </div>
-      <div>
-        <label *ngIf="timer > 0"> U heeft nog {{timer}} seconden </label>
-      </div>
-    </div>
+          <label>{{messageGetal}}</label>
+        </ng-template>
+      <!--<div *ngIf="buttonOpnieuw || timerApp <= 0; then thenBlock else elseBlock">-->
+    </div><!--<div fxFlex="50" fxLayout="column">-->
+      <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+        <div *ngIf="buttonOpnieuw || timerApp <= 0; then thenRechts else elseRechts"></div>
+        <ng-template #thenRechts>  
+          <label>{{messageGetal}}</label>
+          <label>{{messageTimer}}</label>
+        </ng-template>
+        <ng-template #elseRechts>
+          <label> U heeft nog {{teller}} beurten</label>
+          <label> U heeft nog {{timerApp}} seconden </label>
+        </ng-template>
+      </div><!--<div fxFlex="50" fxLayout="column">-->
+  </div><!--<div fxLayout="row wrap">-->
+</div><!--<div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100vh">-->

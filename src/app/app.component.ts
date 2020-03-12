@@ -2,16 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
+import { CounterService} from  './counter.service';
 
-import { Injectable} from  '@angular/core';
-import { Subject} from  'rxjs';
-
-@Injectable({
-  providedIn: 'root'
-})
-
-
-  @Component({
+@Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
@@ -19,50 +12,54 @@ import { Subject} from  'rxjs';
 
 export class AppComponent {
   title = 'firstApp';
+  counterserviceApp;
   randomGetal;
-  timer;
+  timerApp = 60;
   getal;  
   lijst;    
   teller;
   messageGetal;
-  messageTeller;
+  messageTimer;
   buttonOpnieuw;
 
-  secondsSubject: Subject<number> = new Subject<number>();
-
-  constructor() {
+  constructor(counterservice : CounterService){
+    this.counterserviceApp = counterservice;
+    this.counterserviceApp.seconds.subscribe((seconden)=>this.timerApp=seconden);
     this.Initialize();
-
-    setInterval(() => {
-      this.timer -= 1;
-      this.secondsSubject.next(this.timer);
-    }, 1000);
-  }  
-
-  Initialize(){    
-    this.randomGetal = Math.floor(Math.random() * 100) + 1;
-    this.timer = 60;
-    this.lijst = "";
-    this.teller = 3;
-    this.messageGetal = "";
-    this.messageTeller = "";
-    this.buttonOpnieuw = false;
   }
-  
+
+  Initialize(){   
+    this.timerApp = 60; 
+    this.randomGetal = Math.floor(Math.random() * 100) + 1;
+    this.lijst = "";
+    this.teller = 10;
+    this.messageGetal = "";
+    this.messageTimer = "";
+    this.buttonOpnieuw = false;
+    this.counterserviceApp.SetTimer();
+  }
+
+  TimerIsNul()
+  {
+    if (this.timerApp == 0)
+      this.counterserviceApp.StopTimer();
+  }
+
   Enter(event)
   {
     if(event.key  === "Enter")
       this.DoeEenGok();
   }
 
-  DoeEenGok() {
+  DoeEenGok() 
+  {
     this.teller -= 1;
-    this.messageTeller="U heeft nog" + this.teller + "kansen.";
     this.lijst = this.getal + " "  + this.lijst;
    if(this.getal == this.randomGetal)
    {
       this.messageGetal = "Het getal was inderdaad " + this.randomGetal + " , proficiat!";
-      this.messageTeller="";
+      this.counterserviceApp.StopTimer();
+      this.messageTimer="U had nog "+this.timerApp +" seconden over.";
       this.buttonOpnieuw = true;
    }
    else
@@ -75,7 +72,6 @@ export class AppComponent {
     if (this.teller == 0 && this.getal != this.randomGetal)//of timer is nul
     {
       this.messageGetal = "U heeft verloren, het getal was " + this.randomGetal + ".";
-      this.messageTeller = "";
       this.buttonOpnieuw = true;
     }
     this.getal = null;
