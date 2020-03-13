@@ -10,7 +10,6 @@ export class CounterService {
   private interval;
   secondsSubject: Subject<number> = new Subject<number>();
   seconds =  this.secondsSubject.asObservable();
-
   
   StopTimer()
   {
@@ -24,5 +23,5 @@ export class CounterService {
       this.timer -=1;
         this.secondsSubject.next(this.timer);
       },1000)
-  }
+    }  
 }

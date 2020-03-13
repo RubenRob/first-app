@@ -6,6 +6,7 @@ import { CounterService} from  './counter.service';
 
 @Component({
   selector: 'app-root',
+  
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -22,9 +23,14 @@ export class AppComponent {
   messageTimer;
   buttonOpnieuw;
 
-  constructor(counterservice : CounterService){
+  constructor(counterservice : CounterService)
+  {
     this.counterserviceApp = counterservice;
-    this.counterserviceApp.seconds.subscribe((seconden)=>this.timerApp=seconden);
+    this.counterserviceApp.seconds.subscribe((seconden)=>
+      {
+        this.timerApp=seconden;
+      }
+    );
     this.Initialize();
   }
 
@@ -37,12 +43,6 @@ export class AppComponent {
     this.messageTimer = "";
     this.buttonOpnieuw = false;
     this.counterserviceApp.SetTimer();
-  }
-
-  TimerIsNul()
-  {
-    if (this.timerApp == 0)
-      this.counterserviceApp.StopTimer();
   }
 
   Enter(event)
@@ -72,6 +72,7 @@ export class AppComponent {
     if (this.teller == 0 && this.getal != this.randomGetal)//of timer is nul
     {
       this.messageGetal = "U heeft verloren, het getal was " + this.randomGetal + ".";
+      this.counterserviceApp.StopTimer();
       this.buttonOpnieuw = true;
     }
     this.getal = null;
